@@ -13,6 +13,7 @@ export default class App extends Component {
     return (
       <section>
         <header>
+          <h1>Trybetunes by Matheus Eduardo</h1>
           <Switch>
             <Route
               exact
