@@ -31,7 +31,8 @@ export default class MusicCard extends Component {
               <track kind="captions" />
               O seu navegador não suporta o elemento
               {' '}
-              <code>{ music.trackName }</code>
+              { music.trackName }
+              <code>code</code>
             </audio>
             <label htmlFor="checkbox">
               Favorita
