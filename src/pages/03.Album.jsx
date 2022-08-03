@@ -16,7 +16,7 @@ export default class Album extends Component {
     const { match: { params: { id } } } = this.props;
     const data = await getMusics(id);
     this.setState({
-      musicList: data.splice(1),
+      musicList: data.filter((m, index) => index !== 0),
       artistName: data[0].artistName,
       collectionName: data[0].collectionName,
       artworkUrl60: data[0].artworkUrl100,

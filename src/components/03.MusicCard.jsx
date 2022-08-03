@@ -8,12 +8,16 @@ export default class MusicCard extends Component {
       <ol>
         { musicList.map((music, index) => (
           <li key={ index }>
-            { `Track ${music.trackName}:` }
-            <audio data-testid="audio-component" src={ music.previewUrl } controls>
+            { music.trackName }
+            <audio
+              data-testid="audio-component"
+              src={ music.previewUrl }
+              controls
+            >
               <track kind="captions" />
               O seu navegador não suporta o elemento
               {' '}
-              <code>audio</code>
+              <code>{ music.trackName }</code>
             </audio>
           </li>
         ))}
