@@ -1,8 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { addSong } from '../services/favoriteSongsAPI';
 
 export default class MusicCard extends Component {
+  state ={
+    loading: false,
+  }
+
+  addFavorite = async (event) => {
+    const { value } = event.target;
+    const number = parseInt(value, 10);
+    this.setState({ loading: true });
+    await addSong(number);
+    this.setState({ loading: false });
+  }
+
   render() {
+    const { loading } = this.state;
     const { musicList } = this.props;
     return (
       <ol>
@@ -19,8 +33,19 @@ export default class MusicCard extends Component {
               {' '}
               <code>{ music.trackName }</code>
             </audio>
+            <label htmlFor="checkbox">
+              Favorita
+              { ' ' }
+              <input
+                type="checkbox"
+                data-testid={ `checkbox-music-${music.trackId}` }
+                value={ music.trackId }
+                onChange={ this.addFavorite }
+              />
+            </label>
           </li>
         ))}
+        { loading ? 'Carregando...' : '' }
       </ol>
     );
   }

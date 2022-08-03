@@ -9,7 +9,7 @@ export default class Album extends Component {
     musicList: [],
     artistName: '',
     collectionName: '',
-    artworkUrl60: '',
+    artworkUrl100: '',
   }
 
   async componentDidMount() {
@@ -19,12 +19,12 @@ export default class Album extends Component {
       musicList: data.filter((m, index) => index !== 0),
       artistName: data[0].artistName,
       collectionName: data[0].collectionName,
-      artworkUrl60: data[0].artworkUrl100,
+      artworkUrl100: data[0].artworkUrl100,
     });
   }
 
   render() {
-    const { musicList, artistName, collectionName, artworkUrl60 } = this.state;
+    const { musicList, artistName, collectionName, artworkUrl100 } = this.state;
     return (
       <div data-testid="page-album">
         <Header />
@@ -32,7 +32,7 @@ export default class Album extends Component {
           <div>
             <p data-testid="artist-name">{ artistName }</p>
             <p data-testid="album-name">{ collectionName }</p>
-            <img src={ artworkUrl60 } alt={ artistName } />
+            <img src={ artworkUrl100 } alt={ artistName } />
           </div>
           <div>
             <MusicCard musicList={ musicList } />
