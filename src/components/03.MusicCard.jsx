@@ -1,18 +1,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, removeSong } from '../services/favoriteSongsAPI';
 
 export default class MusicCard extends Component {
   state ={
     loading: false,
   }
 
-  addFavorite = async (event) => {
-    const { value } = event.target;
+  toggleFavorite = async (event) => {
+    const { value, checked } = event.target;
     const number = parseInt(value, 10);
     this.setState({ loading: true });
-    await addSong(number);
-    this.setState({ loading: false });
+    if (checked) {
+      await addSong(number);
+      this.setState({
+        loading: false,
+      });
+    } else {
+      await removeSong(number);
+      this.setState({
+        loading: false,
+      });
+    }
   }
 
   render() {
@@ -41,7 +50,8 @@ export default class MusicCard extends Component {
                 type="checkbox"
                 data-testid={ `checkbox-music-${music.trackId}` }
                 value={ music.trackId }
-                onChange={ this.addFavorite }
+                // checked={ checkState }
+                onChange={ this.toggleFavorite }
               />
             </label>
           </li>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Header from '../components/01.Header';
 import getMusics from '../services/musicsAPI';
 import MusicCard from '../components/03.MusicCard';
+import { getFavoriteSongs } from '../services/favoriteSongsAPI';
 
 export default class Album extends Component {
   state = {
@@ -10,10 +11,13 @@ export default class Album extends Component {
     artistName: '',
     collectionName: '',
     artworkUrl100: '',
+    loading: false,
+    dataFavorite: [],
   }
 
   async componentDidMount() {
     const { match: { params: { id } } } = this.props;
+    this.setState({ loading: true });
     const data = await getMusics(id);
     this.setState({
       musicList: data.filter((m, index) => index !== 0),
@@ -21,10 +25,16 @@ export default class Album extends Component {
       collectionName: data[0].collectionName,
       artworkUrl100: data[0].artworkUrl100,
     });
+
+    const favorites = await getFavoriteSongs();
+    this.setState({ dataFavorite: favorites, loading: false });
   }
 
   render() {
-    const { musicList, artistName, collectionName, artworkUrl100 } = this.state;
+    const {
+      musicList, artistName, loading,
+      collectionName, artworkUrl100,
+      dataFavorite } = this.state;
     return (
       <div data-testid="page-album">
         <Header />
@@ -35,7 +45,8 @@ export default class Album extends Component {
             <img src={ artworkUrl100 } alt={ artistName } />
           </div>
           <div>
-            <MusicCard musicList={ musicList } />
+            { loading ? 'Carregando...' : '' }
+            <MusicCard musicList={ musicList } dataFavorite={ dataFavorite } />
           </div>
         </main>
       </div>
