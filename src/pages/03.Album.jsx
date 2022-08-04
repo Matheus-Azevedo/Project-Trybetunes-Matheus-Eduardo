@@ -11,11 +11,13 @@ export default class Album extends Component {
     artistName: '',
     collectionName: '',
     artworkUrl100: '',
-    loading: false,
+    loading: true,
     dataFavorite: [],
   }
 
   async componentDidMount() {
+    const favorites = await getFavoriteSongs();
+    this.setState({ dataFavorite: favorites, loading: false });
     const { match: { params: { id } } } = this.props;
     this.setState({ loading: true });
     const data = await getMusics(id);
@@ -24,10 +26,8 @@ export default class Album extends Component {
       artistName: data[0].artistName,
       collectionName: data[0].collectionName,
       artworkUrl100: data[0].artworkUrl100,
+      loading: false,
     });
-
-    const favorites = await getFavoriteSongs();
-    this.setState({ dataFavorite: favorites, loading: false });
   }
 
   render() {
@@ -46,7 +46,15 @@ export default class Album extends Component {
           </div>
           <div>
             { loading ? 'Carregando...' : '' }
-            <MusicCard musicList={ musicList } dataFavorite={ dataFavorite } />
+            { musicList.map((musica) => (
+              <MusicCard
+                key={ musica.trackId }
+                musica={ musica }
+                trackId={ musica.trackId }
+                trackName={ musica.trackName }
+                previewUrl={ musica.previewUrl }
+                dataFavorite={ dataFavorite }
+              />)) }
           </div>
         </main>
       </div>
