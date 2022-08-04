@@ -4,6 +4,7 @@ import Header from '../components/01.Header';
 import getMusics from '../services/musicsAPI';
 import MusicCard from '../components/03.MusicCard';
 import { getFavoriteSongs } from '../services/favoriteSongsAPI';
+import Loading from '../components/Loading';
 
 export default class Album extends Component {
   state = {
@@ -45,16 +46,17 @@ export default class Album extends Component {
             <img src={ artworkUrl100 } alt={ artistName } />
           </div>
           <div>
-            { loading ? 'Carregando...' : '' }
-            { musicList.map((musica) => (
-              <MusicCard
-                key={ musica.trackId }
-                musica={ musica }
-                trackId={ musica.trackId }
-                trackName={ musica.trackName }
-                previewUrl={ musica.previewUrl }
-                dataFavorite={ dataFavorite }
-              />)) }
+            { loading ? <Loading /> : (
+              musicList.map((musica) => (
+                <MusicCard
+                  key={ musica.trackId }
+                  musica={ musica }
+                  trackId={ musica.trackId }
+                  trackName={ musica.trackName }
+                  previewUrl={ musica.previewUrl }
+                  dataFavorite={ dataFavorite }
+                />))
+            ) }
           </div>
         </main>
       </div>

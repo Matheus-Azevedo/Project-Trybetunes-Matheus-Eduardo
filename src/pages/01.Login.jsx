@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createUser } from '../services/userAPI';
+import Loading from '../components/Loading';
 
 export default class Login extends Component {
   state = {
@@ -59,7 +60,7 @@ export default class Login extends Component {
     const { loading } = this.state;
     return (
       <div>
-        { loading ? 'Carregando...' : this.renderLogin() }
+        { loading ? <Loading /> : this.renderLogin() }
       </div>
     );
   }
