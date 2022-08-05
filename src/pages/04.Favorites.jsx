@@ -14,7 +14,6 @@ export default class Favorites extends Component {
     this.setState({ loading: true });
     const favorites = await getFavoriteSongs();
     this.setState({ dataFavorite: favorites, loading: false });
-    console.log(favorites);
   }
 
   reload = (array) => {
@@ -26,18 +25,20 @@ export default class Favorites extends Component {
     return (
       <div data-testid="page-favorites">
         <Header />
-        { loading ? <Loading /> : (
-          dataFavorite.map((musica, index) => (
-            <MusicCard
-              key={ index }
-              musica={ musica }
-              trackId={ musica.trackId }
-              trackName={ musica.trackName }
-              previewUrl={ musica.previewUrl }
-              dataFavorite={ dataFavorite }
-              reload={ this.reload }
-            />))
-        ) }
+        <main>
+          { loading ? <Loading /> : (
+            dataFavorite.map((musica, index) => (
+              <MusicCard
+                key={ index }
+                musica={ musica }
+                trackId={ musica.trackId }
+                trackName={ musica.trackName }
+                previewUrl={ musica.previewUrl }
+                dataFavorite={ dataFavorite }
+                reload={ this.reload }
+              />))
+          ) }
+        </main>
       </div>
     );
   }

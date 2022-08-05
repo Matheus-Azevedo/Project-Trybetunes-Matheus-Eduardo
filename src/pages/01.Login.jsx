@@ -59,9 +59,9 @@ export default class Login extends Component {
   render() {
     const { loading } = this.state;
     return (
-      <div>
+      <main>
         { loading ? <Loading /> : this.renderLogin() }
-      </div>
+      </main>
     );
   }
 }
